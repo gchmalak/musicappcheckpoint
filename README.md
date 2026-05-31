@@ -3,7 +3,8 @@
 A sleek, dark-themed music player web app that streams 30-second song previews using the Deezer API. Built with vanilla HTML, CSS, and JavaScript — no frameworks, no dependencies.
 
 ---
-
+##app url
+http://127.0.0.1:5500/index.html
 ## Preview
 
 <img width="1882" height="845" alt="image" src="https://github.com/user-attachments/assets/470b2a2f-01c4-4609-afa7-5af7a100b0c3" />
