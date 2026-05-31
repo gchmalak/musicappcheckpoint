@@ -6,7 +6,8 @@ A sleek, dark-themed music player web app that streams 30-second song previews u
 
 ## Preview
 
-![VibeTunes Screenshot](screenshot.png)
+<img width="1882" height="845" alt="image" src="https://github.com/user-attachments/assets/470b2a2f-01c4-4609-afa7-5af7a100b0c3" />
+
 
 ---
 
