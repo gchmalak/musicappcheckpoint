@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VibeTunes</title>
+    <link rel="stylesheet" href="style/style.css" />
+  </head>
+  <body>
+    <main id="app">
+      <header id="header">
+        <h1 id="app-title">VibeTunes</h1>
+        <div id="search-bar">
+          <input
+            id="search-input"
+            type="text"
+            placeholder="Search songs, artists, albums..."
+          />
+        </div>
+      </header>
+
+      <section id="player">
+        <div id="cover-wrapper">
+          <img
+            id="cover-image"
+            src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600&q=80"
+            alt="Current song cover"
+          />
+        </div>
+        <div id="song-info">
+          <div id="song-title">Midnight City</div>
+          <div id="artist-name">M83</div>
+        </div>
+
+        <div id="progress-container">
+          <div id="progress-bar"><div id="progress-fill"></div></div>
+          <div id="progress-times">
+            <span id="current-time">1:24</span>
+            <span id="total-time">4:03</span>
+          </div>
+        </div>
+
+        <div id="controls">
+          <button id="prev-btn" class="ctrl-btn" aria-label="Previous">
+            ⏮
+          </button>
+          <button id="play-btn" class="ctrl-btn" aria-label="Play">▶</button>
+          <button id="pause-btn" class="ctrl-btn" aria-label="Pause">⏸</button>
+          <button id="next-btn" class="ctrl-btn" aria-label="Next">⏭</button>
+        </div>
+      </section>
+
+      <section id="top-tracks-section">
+        <h2 id="top-tracks-title">Top Tracks</h2>
+        <div id="top-tracks-scroll">
+          <!-- Dynamic content will be loaded here from Deezer -->
+        </div>
+      </section>
+    </main>
+
+    <script src="js/script.js"></script>
+  </body>
+</html>
