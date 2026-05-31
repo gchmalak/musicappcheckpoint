@@ -1,40 +1,65 @@
+/* ============================================================
+   Global Reset
+   Remove default margins, paddings, and use border-box sizing
+   so padding doesn't affect element dimensions
+============================================================ */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+/* ============================================================
+   CSS Variables (Design Tokens)
+   Centralised color, surface, and radius values.
+   Changing these updates the whole UI at once.
+============================================================ */
 :root {
-  --bg-1: #0b0a1a;
-  --bg-2: #1a1033;
-  --surface: rgba(255, 255, 255, 0.06);
-  --surface-2: rgba(255, 255, 255, 0.1);
-  --text: #f2f0ff;
-  --muted: #a8a4c7;
-  --accent: #4f8cff;
-  --accent-2: #ff5cdc;
-  --radius: 18px;
+  --bg-1: #0b0a1a;                        /* Darkest background */
+  --bg-2: #1a1033;                        /* Slightly lighter background */
+  --surface: rgba(255, 255, 255, 0.06);   /* Subtle card/button background */
+  --surface-2: rgba(255, 255, 255, 0.1);  /* Slightly more visible surface */
+  --text: #f2f0ff;                        /* Primary text color */
+  --muted: #a8a4c7;                       /* Secondary / subdued text */
+  --accent: #4f8cff;                      /* Blue accent (progress, focus, glow) */
+  --accent-2: #ff5cdc;                    /* Pink accent (gradient partner) */
+  --radius: 18px;                         /* Default border radius for cards */
 }
 
+/* ============================================================
+   Base: html & body
+   Full height, custom font stack, gradient background
+============================================================ */
 html,
 body {
   height: 100%;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   color: var(--text);
-  background: radial-gradient(1200px 800px at 10% -10%, #2a1457 0%, transparent 60%),
+
+  /* Layered radial + linear gradients create the purple/dark background */
+  background:
+    radial-gradient(1200px 800px at 10% -10%, #2a1457 0%, transparent 60%),
     radial-gradient(900px 600px at 110% 10%, #3b1d6e 0%, transparent 55%),
     linear-gradient(180deg, var(--bg-1), var(--bg-2));
+
   min-height: 100vh;
-  -webkit-font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased; /* Smoother text on macOS/iOS */
 }
 
+/* ============================================================
+   App Root Container
+   Centered, max-width layout with breathing room at the bottom
+============================================================ */
 #app {
   max-width: 900px;
   margin: 0 auto;
   padding: 24px 20px 60px;
 }
 
-/* Header */
+/* ============================================================
+   Header
+   Stacks title and search bar vertically, centered
+============================================================ */
 #header {
   display: flex;
   flex-direction: column;
@@ -44,32 +69,39 @@ body {
   margin-bottom: 32px;
 }
 
+/* App title with gradient text effect */
 #app-title {
-  font-size: clamp(28px, 5vw, 40px);
+  font-size: clamp(28px, 5vw, 40px); /* Fluid font size between 28px and 40px */
   font-weight: 800;
   letter-spacing: -0.02em;
+
+  /* Gradient text: blue to pink */
   background: linear-gradient(90deg, var(--accent), var(--accent-2));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
+/* ============================================================
+   Search Bar
+   Pill-shaped input with a search emoji prefix via ::before
+============================================================ */
 #search-bar {
   width: 100%;
   max-width: 480px;
-  position: relative;
+  position: relative; /* Needed to position the ::before emoji icon */
 }
 
 #search-input {
   width: 100%;
-  padding: 14px 18px 14px 44px;
+  padding: 14px 18px 14px 44px; /* Left padding leaves room for the icon */
   border: 1px solid var(--surface-2);
-  border-radius: 999px;
+  border-radius: 999px; /* Fully rounded pill shape */
   background: var(--surface);
   color: var(--text);
   font-size: 15px;
   outline: none;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px); /* Frosted glass effect */
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
@@ -77,11 +109,13 @@ body {
   color: var(--muted);
 }
 
+/* Highlight the input on focus with a blue glow ring */
 #search-input:focus {
   border-color: var(--accent);
   box-shadow: 0 0 0 4px rgba(79, 140, 255, 0.18);
 }
 
+/* Search icon injected as a pseudo-element to avoid extra HTML */
 #search-bar::before {
   content: "🔍";
   position: absolute;
@@ -92,9 +126,16 @@ body {
   font-size: 14px;
 }
 
-/* Player */
+/* ============================================================
+   Player Card
+   Glassmorphism-style card that holds cover, info, progress, controls
+============================================================ */
 #player {
-  background: linear-gradient(160deg, rgba(79, 140, 255, 0.12), rgba(255, 92, 220, 0.08));
+  background: linear-gradient(
+    160deg,
+    rgba(79, 140, 255, 0.12),   /* Blue tint top-left */
+    rgba(255, 92, 220, 0.08)    /* Pink tint bottom-right */
+  );
   border: 1px solid var(--surface-2);
   border-radius: 24px;
   padding: 24px;
@@ -103,24 +144,32 @@ body {
   align-items: center;
   gap: 18px;
   backdrop-filter: blur(14px);
-  box-shadow: 0 20px 60px -20px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 20px 60px -20px rgba(0, 0, 0, 0.6); /* Deep shadow for depth */
 }
 
+/* ============================================================
+   Album Cover
+   Square image with rounded corners and a blue glow shadow
+============================================================ */
 #cover-wrapper {
   width: 220px;
   height: 220px;
   border-radius: var(--radius);
-  overflow: hidden;
+  overflow: hidden; /* Clips the image to the rounded corners */
   box-shadow: 0 20px 50px -10px rgba(79, 140, 255, 0.45);
 }
 
 #cover-image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover; /* Fills the box without distorting the image */
   display: block;
 }
 
+/* ============================================================
+   Song Info
+   Title and artist name, centered below the cover
+============================================================ */
 #song-info {
   text-align: center;
 }
@@ -136,7 +185,10 @@ body {
   color: var(--muted);
 }
 
-/* Progress */
+/* ============================================================
+   Progress Bar
+   Full-width seek bar with a gradient fill and clickable area
+============================================================ */
 #progress-container {
   width: 100%;
   display: flex;
@@ -144,23 +196,26 @@ body {
   gap: 6px;
 }
 
+/* The grey track (background of the bar) */
 #progress-bar {
   width: 100%;
   height: 6px;
   background: var(--surface-2);
   border-radius: 999px;
-  overflow: hidden;
+  overflow: hidden; /* Clips the fill to the rounded track shape */
   cursor: pointer;
 }
 
+/* The colored fill — width is set by JS as a percentage */
 #progress-fill {
   width: 0%;
   height: 100%;
   background: linear-gradient(90deg, var(--accent), var(--accent-2));
   border-radius: 999px;
-  transition: width 0.1s linear;
+  transition: width 0.1s linear; /* Smooth fill movement */
 }
 
+/* Current time on the left, total duration on the right */
 #progress-times {
   display: flex;
   justify-content: space-between;
@@ -168,50 +223,64 @@ body {
   color: var(--muted);
 }
 
-/* Controls */
+/* ============================================================
+   Playback Controls
+   Row of circular buttons: prev, play/pause, next
+============================================================ */
 #controls {
   display: flex;
   align-items: center;
   gap: 22px;
 }
 
+/* Base style for all control buttons */
 .ctrl-btn {
   border: none;
   background: var(--surface);
   color: var(--text);
   width: 52px;
   height: 52px;
-  border-radius: 50%;
+  border-radius: 50%; /* Perfectly circular */
   cursor: pointer;
   font-size: 18px;
   display: grid;
-  place-items: center;
+  place-items: center; /* Centers the icon inside the button */
   transition: transform 0.15s, background 0.2s, box-shadow 0.2s;
 }
 
 .ctrl-btn:hover {
   background: var(--surface-2);
-  transform: translateY(-2px);
+  transform: translateY(-2px); /* Subtle lift on hover */
 }
 
+/* Play and pause buttons are larger with a gradient background and glow */
 #play-btn,
 #pause-btn {
   width: 64px;
   height: 64px;
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  box-shadow: 0 0 24px rgba(79, 140, 255, 0.55), 0 0 40px rgba(255, 92, 220, 0.35);
+  box-shadow:
+    0 0 24px rgba(79, 140, 255, 0.55),
+    0 0 40px rgba(255, 92, 220, 0.35);
 }
 
+/* Stronger glow on hover for the play/pause button */
 #play-btn:hover,
 #pause-btn:hover {
-  box-shadow: 0 0 30px rgba(79, 140, 255, 0.8), 0 0 50px rgba(255, 92, 220, 0.5);
+  box-shadow:
+    0 0 30px rgba(79, 140, 255, 0.8),
+    0 0 50px rgba(255, 92, 220, 0.5);
 }
 
+/* Pause button is hidden by default — JS toggles display between play and pause */
 #pause-btn {
   display: none;
 }
 
-/* Top tracks */
+/* ============================================================
+   Top Tracks Section
+   Heading + horizontally scrollable row of track cards
+============================================================ */
 #top-tracks-section {
   margin-top: 40px;
 }
@@ -223,15 +292,17 @@ body {
   padding-left: 4px;
 }
 
+/* Horizontal scroll container for track cards */
 #top-tracks-scroll {
   display: flex;
   gap: 16px;
-  overflow-x: auto;
+  overflow-x: auto;           /* Enables horizontal scrolling */
   padding: 4px 4px 16px;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;        /* Snaps cards into place when scrolling */
+  -webkit-overflow-scrolling: touch;    /* Smooth momentum scrolling on iOS */
 }
 
+/* Custom scrollbar style — thin and subtle */
 #top-tracks-scroll::-webkit-scrollbar {
   height: 6px;
 }
@@ -241,18 +312,24 @@ body {
   border-radius: 999px;
 }
 
+/* ============================================================
+   Track Card
+   Individual clickable card in the Top Tracks scroll row
+============================================================ */
 .track-card {
-  flex: 0 0 auto;
+  flex: 0 0 auto;       /* Prevents cards from shrinking or growing */
   width: 150px;
-  scroll-snap-align: start;
+  scroll-snap-align: start; /* Snaps to the left edge when scrolling */
   cursor: pointer;
   transition: transform 0.2s, opacity 0.2s;
 }
 
+/* Lift effect on hover */
 .track-card:hover {
   transform: translateY(-4px);
 }
 
+/* Active/playing state: blue glow and colored title */
 .track-card.playing {
   filter: drop-shadow(0 0 8px var(--accent));
 }
@@ -261,6 +338,7 @@ body {
   color: var(--accent);
 }
 
+/* Square cover image with rounded corners */
 .track-cover {
   width: 150px;
   height: 150px;
@@ -269,6 +347,7 @@ body {
   box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
 }
 
+/* Track title — truncated with ellipsis if too long */
 .track-name {
   margin-top: 8px;
   font-size: 14px;
@@ -278,6 +357,7 @@ body {
   text-overflow: ellipsis;
 }
 
+/* Artist name — muted color, also truncated */
 .track-artist {
   font-size: 12px;
   color: var(--muted);
@@ -286,7 +366,11 @@ body {
   text-overflow: ellipsis;
 }
 
-/* Loading and error states */
+/* ============================================================
+   Loading / Empty States
+   Shown inside #top-tracks-scroll while tracks are loading
+   or when a search returns no results
+============================================================ */
 .loading-text,
 .empty-text {
   padding: 20px;
@@ -295,10 +379,15 @@ body {
   width: 100%;
 }
 
+/* Error state shown in red */
 .empty-text {
   color: #ff6b6b;
 }
 
+/* ============================================================
+   Responsive: Mobile (max 480px)
+   Slightly smaller cover and buttons on small screens
+============================================================ */
 @media (max-width: 480px) {
   #cover-wrapper {
     width: 180px;

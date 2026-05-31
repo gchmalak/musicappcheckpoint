@@ -4,13 +4,26 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>VibeTunes</title>
+    <!-- Main stylesheet -->
     <link rel="stylesheet" href="style/style.css" />
   </head>
   <body>
+    <!-- =====================
+         App Root Container
+         Max-width centered layout, defined in CSS
+    ===================== -->
     <main id="app">
+      <!-- =====================
+           Header
+           Contains the app title and search bar
+      ===================== -->
       <header id="header">
+        <!-- App title — updated dynamically by JS when a search runs -->
         <h1 id="app-title">VibeTunes</h1>
+
+        <!-- Search bar wrapper — also used to inject the API warning message -->
         <div id="search-bar">
+          <!-- Press Enter to trigger a Deezer API search via JS -->
           <input
             id="search-input"
             type="text"
@@ -18,8 +31,14 @@
           />
         </div>
       </header>
+      <!-- /header -->
 
+      <!-- =====================
+           Player Section
+           Shows the current song: cover, info, progress bar, controls
+      ===================== -->
       <section id="player">
+        <!-- Album cover image — src is swapped by JS when a song loads -->
         <div id="cover-wrapper">
           <img
             id="cover-image"
@@ -27,37 +46,69 @@
             alt="Current song cover"
           />
         </div>
+
+        <!-- Song title and artist name — updated by JS on song load -->
         <div id="song-info">
           <div id="song-title">Midnight City</div>
           <div id="artist-name">M83</div>
         </div>
 
+        <!-- =====================
+             Progress Bar
+             Clicking anywhere on #progress-container seeks to that position
+        ===================== -->
         <div id="progress-container">
-          <div id="progress-bar"><div id="progress-fill"></div></div>
+          <!-- The grey track background -->
+          <div id="progress-bar">
+            <!-- The colored fill — width % is updated by JS in real time -->
+            <div id="progress-fill"></div>
+          </div>
+          <!-- Current time (left) and total duration (right) -->
           <div id="progress-times">
-            <span id="current-time">1:24</span>
-            <span id="total-time">4:03</span>
+            <span id="current-time">0:00</span>
+            <span id="total-time">0:00</span>
           </div>
         </div>
+        <!-- /progress-container -->
 
+        <!-- =====================
+             Playback Controls
+             prev | play/pause | next
+             play and pause buttons toggle visibility via JS
+        ===================== -->
         <div id="controls">
           <button id="prev-btn" class="ctrl-btn" aria-label="Previous">
             ⏮
           </button>
+
+          <!-- Play button: visible by default, hidden when playing -->
           <button id="play-btn" class="ctrl-btn" aria-label="Play">▶</button>
+
+          <!-- Pause button: hidden by default, shown when playing -->
           <button id="pause-btn" class="ctrl-btn" aria-label="Pause">⏸</button>
+
           <button id="next-btn" class="ctrl-btn" aria-label="Next">⏭</button>
         </div>
+        <!-- /controls -->
       </section>
+      <!-- /player -->
 
+      <!-- =====================
+           Top Tracks Section
+           Horizontally scrollable row of track cards
+           Cards are generated dynamically by JS (renderTopTracks)
+      ===================== -->
       <section id="top-tracks-section">
         <h2 id="top-tracks-title">Top Tracks</h2>
-        <div id="top-tracks-scroll">
-          <!-- Dynamic content will be loaded here from Deezer -->
-        </div>
-      </section>
-    </main>
 
+        <!-- JS renders <article class="track-card"> elements inside here -->
+        <div id="top-tracks-scroll"></div>
+      </section>
+      <!-- /top-tracks-section -->
+    </main>
+    <!-- /app -->
+
+    <!-- Main JS file — loaded at the end so the DOM is ready -->
     <script src="js/script.js"></script>
   </body>
 </html>
